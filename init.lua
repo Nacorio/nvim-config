@@ -27,6 +27,7 @@ local map = vim.keymap.set
 map('n', '<leader>o', ':update<CR>:source<CR>')
 map('n', '<leader>w', ':write<CR>')
 map('n', '<leader>q', ':quit<CR>')
+map('n', '<C-c>', ':!')
 
 map('n', '<leader>y', '"+y')
 map('v', '<leader>y', '"+y')
@@ -49,20 +50,22 @@ map('i', '<C-l>', '<Right>')
 map('n', '<leader>cr', ':!cargo run<CR>')
 map('n', '<leader>cb', ':!cargo build<CR>')
 
+-- mini.files
+map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
+
 -- plugins
 vim.pack.add({
 	{ src = "https://github.com/folke/tokyonight.nvim.git" },
-	{ src = "https://github.com/windwp/nvim-autopairs.git" },
+	{ src = "https://github.com/echasnovski/mini.nvim.git" },
 	{ src = "https://github.com/Saghen/blink.cmp.git" },
 	{ src = "https://github.com/neovim/nvim-lspconfig.git" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter.git", branch = 'master'},
 	{ src = "https://github.com/lewis6991/gitsigns.nvim.git"},
+	{ src = "https://github.com/norcalli/nvim-colorizer.lua.git"},
 })
 
 require("tokyonight").setup({})
 vim.cmd[[colorscheme tokyonight-night]]
-
-require("nvim-autopairs").setup({})
 
 require("blink.cmp").setup({
 	keymap = {preset = 'super-tab'},
@@ -82,3 +85,25 @@ require 'nvim-treesitter.configs'.setup {
 }
 
 require('gitsigns').setup({})
+
+require('colorizer').setup({ 
+	'lua';
+	'css';
+	'rust';
+})
+
+-- mini modules
+-- text editing
+require("mini.pairs").setup({})
+require("mini.surround").setup({})
+
+-- general workflow
+require("mini.files").setup({
+	mappings = {
+		close = '<Esc>',
+	},
+})
+
+-- appearance
+require("mini.icons").setup({})
+require("mini.statusline").setup({})
