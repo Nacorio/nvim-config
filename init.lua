@@ -50,8 +50,22 @@ map('i', '<C-l>', '<Right>')
 map('n', '<leader>cr', ':!cargo run<CR>')
 map('n', '<leader>cb', ':!cargo build<CR>')
 
--- mini.files
 map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
+map('n', '<leader>lf', vim.lsp.buf.format)
+
+local bufnr = vim.api.nvim_get_current_buf()
+vim.keymap.set("n", "<leader>a", function()
+	vim.cmd.RustLsp("codeAction") -- supports rust-analyzer's grouping
+	-- or vim.lsp.buf.codeAction() if you don't want grouping.
+end, { silent = true, buffer = bufnr })
+vim.keymap.set(
+	"n",
+	"K", -- Override Neovim's built-in hover keymap with rustaceanvim's hover actions
+	function()
+		vim.cmd.RustLsp({ "hover", "actions" })
+	end,
+	{ silent = true, buffer = bufnr }
+)
 
 -- plugins
 vim.pack.add({
@@ -62,6 +76,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter.git", branch = 'master'},
 	{ src = "https://github.com/lewis6991/gitsigns.nvim.git"},
 	{ src = "https://github.com/norcalli/nvim-colorizer.lua.git"},
+	{ src = "https://github.com/mrcjkb/rustaceanvim.git"},
 })
 
 require("tokyonight").setup({})
@@ -72,10 +87,9 @@ require("blink.cmp").setup({
 	fuzzy = {implementation = "lua"},
 })
 
-vim.lsp.config('rust_analyzer', {
-})
+-- vim.lsp.config('rust_analyzer', {})
 
-vim.lsp.enable('rust_analyzer')
+-- vim.lsp.enable('rust_analyzer')
 
 require 'nvim-treesitter.configs'.setup {
 	ensure_installed = {"c", "lua", "rust"},
