@@ -47,8 +47,11 @@ map('i', '<C-k>', '<Up>')
 map('i', '<C-l>', '<Right>')
 
 -- cargo keybinds
-map('n', '<leader>cr', ':!cargo run<CR>')
-map('n', '<leader>cb', ':!cargo build<CR>')
+map('n', '<leader>cr', ':w<CR>:!cargo run<CR>')
+map('n', '<leader>cb', ':w<CR>:!cargo build<CR>')
+map('n', '<leader>ct', ':w<CR>:!cargo test<CR>')
+map('n', '<leader>cf', ':w<CR>:!cargo run --release<CR>')
+map('n', '<leader>cg', ':w<CR>:!cargo build --release<CR>')
 
 map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
 map('n', '<leader>lf', vim.lsp.buf.format)
@@ -73,10 +76,11 @@ vim.pack.add({
 	{ src = "https://github.com/echasnovski/mini.nvim.git" },
 	{ src = "https://github.com/Saghen/blink.cmp.git" },
 	{ src = "https://github.com/neovim/nvim-lspconfig.git" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter.git", branch = 'master'},
-	{ src = "https://github.com/lewis6991/gitsigns.nvim.git"},
-	{ src = "https://github.com/norcalli/nvim-colorizer.lua.git"},
-	{ src = "https://github.com/mrcjkb/rustaceanvim.git"},
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter.git", branch = 'master' },
+	{ src = "https://github.com/lewis6991/gitsigns.nvim.git" },
+	{ src = "https://github.com/norcalli/nvim-colorizer.lua.git" },
+	{ src = "https://github.com/mrcjkb/rustaceanvim.git" },
+	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
 })
 
 require("tokyonight").setup({})
@@ -86,10 +90,6 @@ require("blink.cmp").setup({
 	keymap = {preset = 'super-tab'},
 	fuzzy = {implementation = "lua"},
 })
-
--- vim.lsp.config('rust_analyzer', {})
-
--- vim.lsp.enable('rust_analyzer')
 
 require 'nvim-treesitter.configs'.setup {
 	ensure_installed = {"c", "lua", "rust"},
@@ -121,3 +121,8 @@ require("mini.files").setup({
 -- appearance
 require("mini.icons").setup({})
 require("mini.statusline").setup({})
+require("mini.comment").setup({})
+
+vim.lsp.inlay_hint.enable(true)
+
+vim.diagnostic.config { virtual_text = true }
