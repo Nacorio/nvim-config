@@ -8,7 +8,7 @@ o.tabstop = 4
 o.shiftwidth = 4
 o.swapfile = false
 o.winborder = "rounded"
-o.clipboard = "unnamedplus"
+o.colorcolumn = {80}
 
 o.mouse = 'a'
 o.undofile = true
@@ -52,6 +52,7 @@ map('n', '<leader>cb', ':w<CR>:!cargo build<CR>')
 map('n', '<leader>ct', ':w<CR>:!cargo test<CR>')
 map('n', '<leader>cf', ':w<CR>:!cargo run --release<CR>')
 map('n', '<leader>cg', ':w<CR>:!cargo build --release<CR>')
+map('n', '<leader>ca', ':!cargo add')
 
 map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
 map('n', '<leader>lf', vim.lsp.buf.format)
