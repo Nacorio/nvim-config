@@ -1,3 +1,4 @@
+local vim = vim -- this is not good
 -- options
 local o = vim.opt
 
