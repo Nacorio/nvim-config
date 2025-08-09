@@ -15,6 +15,7 @@ o.undofile = true
 o.ignorecase = true
 o.smartcase = true
 o.updatetime = 250
+o.signcolumn = "yes"
 
 o.list = true
 
@@ -56,6 +57,7 @@ map('n', '<leader>ca', ':!cargo add')
 
 map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
 map('n', '<leader>lf', vim.lsp.buf.format)
+map('n', '<leader>d', vim.diagnostic.open_float)
 
 local bufnr = vim.api.nvim_get_current_buf()
 vim.keymap.set("n", "<leader>a", function()
@@ -127,3 +129,5 @@ require("mini.comment").setup({})
 vim.lsp.inlay_hint.enable(true)
 
 vim.diagnostic.config { virtual_text = true }
+
+vim.lsp.enable("lua_ls")
