@@ -8,7 +8,7 @@ o.tabstop = 4
 o.shiftwidth = 4
 o.swapfile = false
 o.winborder = "rounded"
-o.colorcolumn = {80}
+o.colorcolumn = { 80 }
 
 o.mouse = 'a'
 o.undofile = true
@@ -84,18 +84,19 @@ vim.pack.add({
 	{ src = "https://github.com/norcalli/nvim-colorizer.lua.git" },
 	{ src = "https://github.com/mrcjkb/rustaceanvim.git" },
 	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
+	{ src = "https://github.com/folke/trouble.nvim.git" },
 })
 
 require("tokyonight").setup({})
-vim.cmd[[colorscheme tokyonight-night]]
+vim.cmd [[colorscheme tokyonight-night]]
 
 require("blink.cmp").setup({
-	keymap = {preset = 'super-tab'},
-	fuzzy = {implementation = "lua"},
+	keymap = { preset = 'super-tab' },
+	fuzzy = { implementation = "lua" },
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = {"c", "lua", "rust"},
+	ensure_installed = { "c", "lua", "rust" },
 	highlight = {
 		enable = true,
 	},
@@ -103,10 +104,10 @@ require 'nvim-treesitter.configs'.setup {
 
 require('gitsigns').setup({})
 
-require('colorizer').setup({ 
-	'lua';
-	'css';
-	'rust';
+require('colorizer').setup({
+	'lua',
+	'css',
+	'rust',
 })
 
 -- mini modules
@@ -126,8 +127,13 @@ require("mini.icons").setup({})
 require("mini.statusline").setup({})
 require("mini.comment").setup({})
 
+-- show diagnostics at the bottom
+require("trouble").setup({})
+map('n', '<leader>t', '<cmd>Trouble diagnostics toggle<CR>')
+
 vim.lsp.inlay_hint.enable(true)
 
 vim.diagnostic.config { virtual_text = true }
 
 vim.lsp.enable("lua_ls")
+
