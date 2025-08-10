@@ -19,6 +19,7 @@ o.updatetime = 250
 o.signcolumn = "yes"
 
 o.list = true
+o.listchars = {tab = '» ', trail = '·'}
 
 -- keybinds
 vim.g.mapleader = " "
@@ -38,15 +39,18 @@ map('n', '<leader>p', '"+p')
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Disable arrow keys in normal mode
-map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-map('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+-- map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+-- map('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+-- map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+-- map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 map('i', '<C-h>', '<Left>')
 map('i', '<C-j>', '<Down>')
 map('i', '<C-k>', '<Up>')
 map('i', '<C-l>', '<Right>')
+
+map('i', '<C-BS>', '<Esc>ldbi')
+map('i', '<C-Del>', '<Esc>ldwi')
 
 -- cargo keybinds
 map('n', '<leader>cr', ':w<CR>:!cargo run<CR>')
