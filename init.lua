@@ -4,7 +4,7 @@ local o = vim.opt
 
 o.number = true
 o.relativenumber = true
-o.wrap = false
+-- o.wrap = false
 o.tabstop = 4
 o.shiftwidth = 4
 o.swapfile = false
@@ -19,7 +19,7 @@ o.updatetime = 250
 o.signcolumn = "yes"
 
 o.list = true
-o.listchars = {tab = '» ', trail = '·'}
+o.listchars = { tab = '» ', trail = '·' }
 
 -- keybinds
 vim.g.mapleader = " "
@@ -27,7 +27,7 @@ vim.g.localmapleader = " "
 
 local map = vim.keymap.set
 
-map('n', '<leader>o', ':update<CR>:source<CR>')
+--map('n', '<leader>o', ':update<CR>:source<CR>')
 map('n', '<leader>w', ':write<CR>')
 map('n', '<leader>q', ':quit<CR>')
 map('n', '<C-c>', ':!')
@@ -60,6 +60,9 @@ map('n', '<leader>cf', ':w<CR>:!cargo run --release<CR>')
 map('n', '<leader>cg', ':w<CR>:!cargo build --release<CR>')
 map('n', '<leader>ca', ':!cargo add')
 
+-- typst keybinds
+map('n', '<leader>t', ':TypstPreview<CR>')
+
 map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
 map('n', '<leader>lf', vim.lsp.buf.format)
 map('n', '<leader>d', vim.diagnostic.open_float)
@@ -90,6 +93,7 @@ vim.pack.add({
 	{ src = "https://github.com/mrcjkb/rustaceanvim.git" },
 	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
 	{ src = "https://github.com/folke/trouble.nvim.git" },
+	{ src = "https://github.com/chomosuke/typst-preview.nvim.git" },
 })
 
 require("tokyonight").setup({})
@@ -101,7 +105,7 @@ require("blink.cmp").setup({
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust" },
+	ensure_installed = { "c", "lua", "rust", "typst" },
 	highlight = {
 		enable = true,
 	},
@@ -113,6 +117,8 @@ require('colorizer').setup({
 	'lua',
 	'css',
 	'rust',
+	'conf',
+	'typst',
 })
 
 -- mini modules
@@ -134,7 +140,7 @@ require("mini.comment").setup({})
 
 -- show diagnostics at the bottom
 require("trouble").setup({})
-map('n', '<leader>t', '<cmd>Trouble diagnostics toggle<CR>')
+map('n', '<leader>o', '<cmd>Trouble diagnostics toggle<CR>')
 
 vim.lsp.inlay_hint.enable(true)
 
@@ -142,3 +148,10 @@ vim.diagnostic.config { virtual_text = true }
 
 vim.lsp.enable("lua_ls")
 
+require("lspconfig")["tinymist"].setup {
+        settings = {
+                formatterMode = "typstyle",
+                exportPdf = "onType",
+                semanticTokens = "disable"
+        }
+}
