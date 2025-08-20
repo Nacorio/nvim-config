@@ -35,6 +35,8 @@ map('n', '<C-c>', ':!')
 map('n', '<leader>y', '"+y')
 map('v', '<leader>y', '"+y')
 map('n', '<leader>p', '"+p')
+map('n', '<C-S-J>', ':m +1<CR>')
+map('n', '<C-S-K>', ':m -2<CR>')
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -71,7 +73,7 @@ local bufnr = vim.api.nvim_get_current_buf()
 vim.keymap.set("n", "<leader>a", function()
 	vim.cmd.RustLsp("codeAction") -- supports rust-analyzer's grouping
 	-- or vim.lsp.buf.codeAction() if you don't want grouping.
-end, { silent = true, buffer = bufnr })
+end, { silent = true})
 vim.keymap.set(
 	"n",
 	"K", -- Override Neovim's built-in hover keymap with rustaceanvim's hover actions
@@ -123,7 +125,21 @@ require('colorizer').setup({
 
 -- mini modules
 -- text editing
-require("mini.pairs").setup({})
+require("mini.pairs").setup({
+	mappings = {
+		['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
+		['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
+		['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
+
+		[')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
+		[']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
+		['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
+
+		['"'] = { action = 'close', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
+		["'"] = { action = 'close', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
+		['`'] = { action = 'close', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
+	},
+})
 require("mini.surround").setup({})
 
 -- general workflow
@@ -149,9 +165,9 @@ vim.diagnostic.config { virtual_text = true }
 vim.lsp.enable("lua_ls")
 
 require("lspconfig")["tinymist"].setup {
-        settings = {
-                formatterMode = "typstyle",
-                exportPdf = "onType",
-                semanticTokens = "disable"
-        }
+	settings = {
+		formatterMode = "typstyle",
+		exportPdf = "onType",
+		semanticTokens = "disable"
+	}
 }
