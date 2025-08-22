@@ -21,6 +21,8 @@ o.signcolumn = "yes"
 o.list = true
 o.listchars = { tab = '» ', trail = '·' }
 
+o.termguicolors = true
+
 -- keybinds
 vim.g.mapleader = " "
 vim.g.localmapleader = " "
@@ -39,6 +41,14 @@ map('n', '<C-S-J>', ':m +1<CR>')
 map('n', '<C-S-K>', ':m -2<CR>')
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- bufferline keybinds
+map('n', '<leader>bp', '<cmd>BufferLineCyclePrev<CR>')
+map('n', '<C-P>', '<cmd>BufferLineCyclePrev<CR>')
+map('n', '<leader>bn', '<cmd>BufferLineCycleNext<CR>')
+map('n', '<C-N>', '<cmd>BufferLineCycleNext<CR>')
+map('n', '<leader>bq', '<cmd>BufferLineCloseRight<CR>')
+map('n', '<leader>bo', '<cmd>BufferLineCloseOthers<CR>')
 
 -- Disable arrow keys in normal mode
 -- map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -65,7 +75,6 @@ map('n', '<leader>ca', ':!cargo add')
 -- typst keybinds
 map('n', '<leader>t', ':TypstPreview<CR>')
 
-map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
 map('n', '<leader>lf', vim.lsp.buf.format)
 map('n', '<leader>d', vim.diagnostic.open_float)
 
@@ -73,7 +82,7 @@ local bufnr = vim.api.nvim_get_current_buf()
 vim.keymap.set("n", "<leader>a", function()
 	vim.cmd.RustLsp("codeAction") -- supports rust-analyzer's grouping
 	-- or vim.lsp.buf.codeAction() if you don't want grouping.
-end, { silent = true})
+end, { silent = true })
 vim.keymap.set(
 	"n",
 	"K", -- Override Neovim's built-in hover keymap with rustaceanvim's hover actions
@@ -96,6 +105,9 @@ vim.pack.add({
 	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
 	{ src = "https://github.com/folke/trouble.nvim.git" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim.git" },
+	{ src = "https://github.com/akinsho/bufferline.nvim.git" },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim.git" },
+	{ src = "https://github.com/nvim-lua/plenary.nvim.git" },
 })
 
 require("tokyonight").setup({})
@@ -143,11 +155,12 @@ require("mini.pairs").setup({
 require("mini.surround").setup({})
 
 -- general workflow
-require("mini.files").setup({
-	mappings = {
-		close = '<Esc>',
-	},
-})
+-- map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
+-- require("mini.files").setup({
+-- 	mappings = {
+-- 		close = '<Esc>',
+-- 	},
+-- })
 
 -- appearance
 require("mini.icons").setup({})
@@ -171,3 +184,12 @@ require("lspconfig")["tinymist"].setup {
 		semanticTokens = "disable"
 	}
 }
+
+require("bufferline").setup({})
+
+require("telescope").setup({})
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
