@@ -98,7 +98,7 @@ vim.pack.add({
 	{ src = "https://github.com/echasnovski/mini.nvim.git" },
 	{ src = "https://github.com/Saghen/blink.cmp.git" },
 	{ src = "https://github.com/neovim/nvim-lspconfig.git" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter.git", branch = 'master' },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter.git",    branch = 'master' },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim.git" },
 	{ src = "https://github.com/norcalli/nvim-colorizer.lua.git" },
 	{ src = "https://github.com/mrcjkb/rustaceanvim.git" },
@@ -108,6 +108,8 @@ vim.pack.add({
 	{ src = "https://github.com/akinsho/bufferline.nvim.git" },
 	{ src = "https://github.com/nvim-telescope/telescope.nvim.git" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim.git" },
+	{ src = "https://github.com/ray-x/web-tools.nvim.git" },
+	{ src = "https://github.com/lukas-reineke/indent-blankline.nvim.git" },
 })
 
 require("tokyonight").setup({})
@@ -119,7 +121,7 @@ require("blink.cmp").setup({
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust", "typst" },
+	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl" },
 	highlight = {
 		enable = true,
 	},
@@ -133,6 +135,8 @@ require('colorizer').setup({
 	'rust',
 	'conf',
 	'typst',
+	'html',
+	'wgsl',
 })
 
 -- mini modules
@@ -155,12 +159,12 @@ require("mini.pairs").setup({
 require("mini.surround").setup({})
 
 -- general workflow
--- map('n', '<leader>f', ':lua MiniFiles.open()<CR>')
--- require("mini.files").setup({
--- 	mappings = {
--- 		close = '<Esc>',
--- 	},
--- })
+map('n', '<leader>fp', ':lua MiniFiles.open()<CR>')
+require("mini.files").setup({
+	mappings = {
+		close = '<Esc>',
+	},
+})
 
 -- appearance
 require("mini.icons").setup({})
@@ -193,3 +197,31 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+vim.lsp.enable("html")
+
+require 'web-tools'.setup({
+	keymaps = {
+		rename = nil,   -- by default use same setup of lspconfig
+		repeat_rename = '.', -- . to repeat
+	},
+	hurl = {            -- hurl default
+		show_headers = false, -- do not show http headers
+		floating = false, -- use floating windows (need guihua.lua)
+		json5 = false,  -- use json5 parser require json5 treesitter
+		formatters = {  -- format the result by filetype
+			json = { 'jq' },
+			html = { 'prettier', '--parser', 'html' },
+		},
+	},
+})
+
+require("ibl").setup({
+	scope = { highlight = "MiniTablineHidden" },
+})
+
+vim.lsp.config("wgsl-analyzer", {
+	cmd = { "wgsl-analyzer" },
+	filetypes = { "wgsl" },
+})
+vim.lsp.enable("wgsl-analyzer")
