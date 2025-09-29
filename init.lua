@@ -9,7 +9,7 @@ o.tabstop = 4
 o.shiftwidth = 4
 o.swapfile = false
 o.winborder = "rounded"
-o.colorcolumn = { 80 }
+o.colorcolumn = { 100 }
 
 o.mouse = 'a'
 o.undofile = true
@@ -95,6 +95,7 @@ vim.keymap.set(
 -- plugins
 vim.pack.add({
 	{ src = "https://github.com/folke/tokyonight.nvim.git" },
+	{ src = "https://github.com/ellisonleao/gruvbox.nvim.git" },
 	{ src = "https://github.com/echasnovski/mini.nvim.git" },
 	{ src = "https://github.com/Saghen/blink.cmp.git" },
 	{ src = "https://github.com/neovim/nvim-lspconfig.git" },
@@ -110,10 +111,13 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-lua/plenary.nvim.git" },
 	{ src = "https://github.com/ray-x/web-tools.nvim.git" },
 	{ src = "https://github.com/lukas-reineke/indent-blankline.nvim.git" },
+	{ src = "https://github.com/windwp/nvim-autopairs.git" },
 })
 
-require("tokyonight").setup({})
-vim.cmd [[colorscheme tokyonight-night]]
+-- require("tokyonight").setup({})
+-- vim.cmd [[colorscheme tokyonight-night]]
+require("gruvbox").setup({})
+vim.cmd [[colorscheme gruvbox]]
 
 require("blink.cmp").setup({
 	keymap = { preset = 'super-tab' },
@@ -141,21 +145,21 @@ require('colorizer').setup({
 
 -- mini modules
 -- text editing
-require("mini.pairs").setup({
-	mappings = {
-		['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
-		['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
-		['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
-
-		[')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
-		[']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
-		['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
-
-		['"'] = { action = 'close', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
-		["'"] = { action = 'close', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
-		['`'] = { action = 'close', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
-	},
-})
+-- require("mini.pairs").setup({
+-- 	mappings = {
+-- 		['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
+-- 		['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
+-- 		['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
+--
+-- 		[')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
+-- 		[']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
+-- 		['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
+--
+-- 		['"'] = { action = 'close', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
+-- 		["'"] = { action = 'close', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
+-- 		['`'] = { action = 'close', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
+-- 	},
+-- })
 require("mini.surround").setup({})
 
 -- general workflow
@@ -225,3 +229,5 @@ vim.lsp.config("wgsl-analyzer", {
 	filetypes = { "wgsl" },
 })
 vim.lsp.enable("wgsl-analyzer")
+
+require("nvim-autopairs").setup()
