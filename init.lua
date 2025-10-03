@@ -78,20 +78,6 @@ map('n', '<leader>t', ':TypstPreview<CR>')
 map('n', '<leader>lf', vim.lsp.buf.format)
 map('n', '<leader>d', vim.diagnostic.open_float)
 
-local bufnr = vim.api.nvim_get_current_buf()
-vim.keymap.set("n", "<leader>a", function()
-	vim.cmd.RustLsp("codeAction") -- supports rust-analyzer's grouping
-	-- or vim.lsp.buf.codeAction() if you don't want grouping.
-end, { silent = true })
-vim.keymap.set(
-	"n",
-	"K", -- Override Neovim's built-in hover keymap with rustaceanvim's hover actions
-	function()
-		vim.cmd.RustLsp({ "hover", "actions" })
-	end,
-	{ silent = true, buffer = bufnr }
-)
-
 -- plugins
 vim.pack.add({
 	{ src = "https://github.com/folke/tokyonight.nvim.git" },
@@ -112,6 +98,7 @@ vim.pack.add({
 	{ src = "https://github.com/ray-x/web-tools.nvim.git" },
 	{ src = "https://github.com/lukas-reineke/indent-blankline.nvim.git" },
 	{ src = "https://github.com/windwp/nvim-autopairs.git" },
+	{ src = "https://github.com/LuaDist/dkjson.git" },
 })
 
 -- require("tokyonight").setup({})
@@ -125,7 +112,7 @@ require("blink.cmp").setup({
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl" },
+	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp" },
 	highlight = {
 		enable = true,
 	},
@@ -183,16 +170,6 @@ vim.lsp.inlay_hint.enable(true)
 
 vim.diagnostic.config { virtual_text = true }
 
-vim.lsp.enable("lua_ls")
-
-require("lspconfig")["tinymist"].setup {
-	settings = {
-		formatterMode = "typstyle",
-		exportPdf = "onType",
-		semanticTokens = "disable"
-	}
-}
-
 require("bufferline").setup({})
 
 require("telescope").setup({})
@@ -201,24 +178,6 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-
-vim.lsp.enable("html")
-
-require 'web-tools'.setup({
-	keymaps = {
-		rename = nil,   -- by default use same setup of lspconfig
-		repeat_rename = '.', -- . to repeat
-	},
-	hurl = {            -- hurl default
-		show_headers = false, -- do not show http headers
-		floating = false, -- use floating windows (need guihua.lua)
-		json5 = false,  -- use json5 parser require json5 treesitter
-		formatters = {  -- format the result by filetype
-			json = { 'jq' },
-			html = { 'prettier', '--parser', 'html' },
-		},
-	},
-})
 
 require("ibl").setup({
 	scope = { highlight = "MiniTablineHidden" },
@@ -231,3 +190,5 @@ vim.lsp.config("wgsl-analyzer", {
 vim.lsp.enable("wgsl-analyzer")
 
 require("nvim-autopairs").setup()
+
+require("Arduino-Nvim.lsp").setup()
