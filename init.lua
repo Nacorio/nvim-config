@@ -99,6 +99,7 @@ vim.pack.add({
 	{ src = "https://github.com/lukas-reineke/indent-blankline.nvim.git" },
 	{ src = "https://github.com/windwp/nvim-autopairs.git" },
 	{ src = "https://github.com/LuaDist/dkjson.git" },
+	{ src = "https://github.com/NMAC427/guess-indent.nvim.git" },
 })
 
 -- require("tokyonight").setup({})
@@ -112,7 +113,7 @@ require("blink.cmp").setup({
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp" },
+	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp" },
 	highlight = {
 		enable = true,
 	},
@@ -192,3 +193,7 @@ vim.lsp.enable("wgsl-analyzer")
 require("nvim-autopairs").setup()
 
 require("Arduino-Nvim.lsp").setup()
+
+require("guess-indent").setup {
+	override_editorconfig = false
+}
