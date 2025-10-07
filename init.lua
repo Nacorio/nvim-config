@@ -98,8 +98,8 @@ vim.pack.add({
 	{ src = "https://github.com/ray-x/web-tools.nvim.git" },
 	{ src = "https://github.com/lukas-reineke/indent-blankline.nvim.git" },
 	{ src = "https://github.com/windwp/nvim-autopairs.git" },
-	{ src = "https://github.com/LuaDist/dkjson.git" },
 	{ src = "https://github.com/NMAC427/guess-indent.nvim.git" },
+	{ src = "https://github.com/seblyng/roslyn.nvim.git" },
 })
 
 -- require("tokyonight").setup({})
@@ -197,3 +197,6 @@ require("Arduino-Nvim.lsp").setup()
 require("guess-indent").setup {
 	override_editorconfig = false
 }
+
+vim.lsp.config("roslyn", {})
+vim.lsp.enable("roslyn")
