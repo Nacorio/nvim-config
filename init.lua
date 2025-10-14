@@ -200,3 +200,5 @@ require("guess-indent").setup {
 
 vim.lsp.config("roslyn", {})
 vim.lsp.enable("roslyn")
+
+vim.lsp.enable("clangd")
