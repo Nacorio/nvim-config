@@ -7,6 +7,7 @@ o.relativenumber = true
 -- o.wrap = false
 o.tabstop = 4
 o.shiftwidth = 4
+o.expandtab = true
 o.swapfile = false
 o.winborder = "rounded"
 o.colorcolumn = { 100 }
