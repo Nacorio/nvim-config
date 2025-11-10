@@ -103,10 +103,10 @@ vim.pack.add({
 	{ src = "https://github.com/seblyng/roslyn.nvim.git" },
 })
 
--- require("tokyonight").setup({})
--- vim.cmd [[colorscheme tokyonight-night]]
-require("gruvbox").setup({})
-vim.cmd [[colorscheme gruvbox]]
+require("tokyonight").setup({})
+vim.cmd [[colorscheme tokyonight-night]]
+-- require("gruvbox").setup({})
+-- vim.cmd [[colorscheme gruvbox]]
 
 require("blink.cmp").setup({
 	keymap = { preset = 'super-tab' },
@@ -185,11 +185,11 @@ require("ibl").setup({
 	scope = { highlight = "MiniTablineHidden" },
 })
 
-vim.lsp.config("wgsl-analyzer", {
-	cmd = { "wgsl-analyzer" },
-	filetypes = { "wgsl" },
-})
-vim.lsp.enable("wgsl-analyzer")
+-- vim.lsp.config("wgsl-analyzer", {
+-- 	cmd = { "wgsl-analyzer" },
+-- 	filetypes = { "wgsl" },
+-- })
+-- vim.lsp.enable("wgsl-analyzer")
 
 require("nvim-autopairs").setup()
 
@@ -199,7 +199,12 @@ require("guess-indent").setup {
 	override_editorconfig = false
 }
 
-vim.lsp.config("roslyn", {})
-vim.lsp.enable("roslyn")
+-- vim.lsp.config("roslyn", {})
+-- vim.lsp.enable("roslyn")
 
+vim.lsp.config("clangd", {
+	cmd = {
+		"clangd", "--clang-tidy"
+	}
+})
 vim.lsp.enable("clangd")

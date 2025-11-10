@@ -1,0 +1,84 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "a4ab037",
+      "src": "https://github.com/Saghen/blink.cmp.git"
+    },
+    "bufferline.nvim": {
+      "rev": "655133c",
+      "src": "https://github.com/akinsho/bufferline.nvim.git"
+    },
+    "gitsigns.nvim": {
+      "rev": "1ee5c1f",
+      "src": "https://github.com/lewis6991/gitsigns.nvim.git"
+    },
+    "gruvbox.nvim": {
+      "rev": "5e0a460",
+      "src": "https://github.com/ellisonleao/gruvbox.nvim.git"
+    },
+    "guess-indent.nvim": {
+      "rev": "84a4987",
+      "src": "https://github.com/NMAC427/guess-indent.nvim.git"
+    },
+    "indent-blankline.nvim": {
+      "rev": "005b560",
+      "src": "https://github.com/lukas-reineke/indent-blankline.nvim.git"
+    },
+    "mini.nvim": {
+      "rev": "8a7cf7e",
+      "src": "https://github.com/echasnovski/mini.nvim.git"
+    },
+    "nvim-autopairs": {
+      "rev": "7a2c97c",
+      "src": "https://github.com/windwp/nvim-autopairs.git"
+    },
+    "nvim-colorizer.lua": {
+      "rev": "a065833",
+      "src": "https://github.com/norcalli/nvim-colorizer.lua.git"
+    },
+    "nvim-dap": {
+      "rev": "6782b09",
+      "src": "https://github.com/mfussenegger/nvim-dap.git"
+    },
+    "nvim-lspconfig": {
+      "rev": "ac98db2",
+      "src": "https://github.com/neovim/nvim-lspconfig.git"
+    },
+    "nvim-treesitter": {
+      "rev": "42fc28ba",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter.git"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd522",
+      "src": "https://github.com/nvim-lua/plenary.nvim.git"
+    },
+    "roslyn.nvim": {
+      "rev": "7d88192",
+      "src": "https://github.com/seblyng/roslyn.nvim.git"
+    },
+    "rustaceanvim": {
+      "rev": "2f5afad",
+      "src": "https://github.com/mrcjkb/rustaceanvim.git"
+    },
+    "telescope.nvim": {
+      "rev": "b4da76b",
+      "src": "https://github.com/nvim-telescope/telescope.nvim.git"
+    },
+    "tokyonight.nvim": {
+      "rev": "d14614c",
+      "src": "https://github.com/folke/tokyonight.nvim.git"
+    },
+    "trouble.nvim": {
+      "rev": "c098362",
+      "src": "https://github.com/folke/trouble.nvim.git"
+    },
+    "typst-preview.nvim": {
+      "rev": "1603d37",
+      "src": "https://github.com/chomosuke/typst-preview.nvim.git"
+    },
+    "web-tools.nvim": {
+      "rev": "2f89504",
+      "src": "https://github.com/ray-x/web-tools.nvim.git"
+    }
+  }
+}
