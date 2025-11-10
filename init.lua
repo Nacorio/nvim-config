@@ -101,6 +101,7 @@ vim.pack.add({
 	{ src = "https://github.com/windwp/nvim-autopairs.git" },
 	{ src = "https://github.com/NMAC427/guess-indent.nvim.git" },
 	{ src = "https://github.com/seblyng/roslyn.nvim.git" },
+	{ src = "https://github.com/folke/todo-comments.nvim.git" },
 })
 
 -- require("tokyonight").setup({})
@@ -114,7 +115,7 @@ require("blink.cmp").setup({
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp" },
+	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm" },
 	highlight = {
 		enable = true,
 	},
@@ -185,11 +186,11 @@ require("ibl").setup({
 	scope = { highlight = "MiniTablineHidden" },
 })
 
-vim.lsp.config("wgsl-analyzer", {
-	cmd = { "wgsl-analyzer" },
-	filetypes = { "wgsl" },
-})
-vim.lsp.enable("wgsl-analyzer")
+-- vim.lsp.config("wgsl-analyzer", {
+-- 	cmd = { "wgsl-analyzer" },
+-- 	filetypes = { "wgsl" },
+-- })
+-- vim.lsp.enable("wgsl-analyzer")
 
 require("nvim-autopairs").setup()
 
@@ -199,7 +200,21 @@ require("guess-indent").setup {
 	override_editorconfig = false
 }
 
-vim.lsp.config("roslyn", {})
-vim.lsp.enable("roslyn")
+require("todo-comments").setup({
+	keywords = {
+		TODO = { icon = "🛈", color = "info"},
+	},
+	highlight = {
+		pattern = [[.*(KEYWORDS)\s*]]
+	},
+	search = {
+		pattern = [[\b(KEYWORDS)\b]]
+	}
+})
+
+-- vim.lsp.config("roslyn", {})
+-- vim.lsp.enable("roslyn")
 
 vim.lsp.enable("clangd")
+
+vim.lsp.enable('asm_lsp')
