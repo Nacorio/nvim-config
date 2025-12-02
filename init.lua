@@ -74,10 +74,14 @@ map('n', '<leader>cg', ':w<CR>:!cargo build --release<CR>')
 map('n', '<leader>ca', ':!cargo add')
 
 -- typst keybinds
-map('n', '<leader>t', ':TypstPreview<CR>')
+-- map('n', '<leader>t', ':TypstPreview<CR>')
 
+-- lsp-stuff
 map('n', '<leader>lf', vim.lsp.buf.format)
 map('n', '<leader>d', vim.diagnostic.open_float)
+
+--debug
+map('n', '<leader>t', ":lua require(\"dapui\").toggle()<CR>")
 
 -- plugins
 vim.pack.add({
@@ -102,12 +106,15 @@ vim.pack.add({
 	{ src = "https://github.com/NMAC427/guess-indent.nvim.git" },
 	{ src = "https://github.com/seblyng/roslyn.nvim.git" },
 	{ src = "https://github.com/folke/todo-comments.nvim.git" },
+	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
+	{ src = "https://github.com/nvim-neotest/nvim-nio.git" },
+	{ src = "https://github.com/rcarriga/nvim-dap-ui.git" },
 })
 
-require("tokyonight").setup({})
-vim.cmd [[colorscheme tokyonight-night]]
--- require("gruvbox").setup({})
--- vim.cmd [[colorscheme gruvbox]]
+-- require("tokyonight").setup({})
+-- vim.cmd [[colorscheme tokyonight-night]]
+require("gruvbox").setup({})
+vim.cmd [[colorscheme gruvbox]]
 
 require("blink.cmp").setup({
 	keymap = { preset = 'super-tab' },
@@ -223,3 +230,47 @@ vim.lsp.config("clangd", {
 vim.lsp.enable("clangd")
 
 vim.lsp.enable('asm_lsp')
+
+require("dapui").setup()
+
+local dap = require('dap')
+dap.adapters.cppdbg = {
+  id = 'cppdbg',
+  type = 'executable',
+  command = '/usr/share/cpptools-debug/bin/OpenDebugAD7',
+}
+dap.configurations.c = {
+  {
+    name = "Launch file",
+    type = "cppdbg",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+	args = function ()
+		-- local s = vim.fn.input('Arguments: ')
+		-- local vec = {}
+		-- local index = 0
+		-- for part in string.gmatch(s, "%S+") do
+		-- 	vec[index] = part
+		-- 	index = index + 1
+		-- end
+		-- return vec
+		return {"-t", "bla"}
+	end,
+    cwd = '${workspaceFolder}',
+    stopAtEntry = true,
+  },
+  {
+    name = 'Attach to gdbserver :1234',
+    type = 'cppdbg',
+    request = 'launch',
+    MIMode = 'gdb',
+    miDebuggerServerAddress = 'localhost:1234',
+    miDebuggerPath = '/usr/bin/gdb',
+    cwd = '${workspaceFolder}',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+  },
+}
