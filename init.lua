@@ -248,15 +248,14 @@ dap.configurations.c = {
       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
     end,
 	args = function ()
-		-- local s = vim.fn.input('Arguments: ')
-		-- local vec = {}
-		-- local index = 0
-		-- for part in string.gmatch(s, "%S+") do
-		-- 	vec[index] = part
-		-- 	index = index + 1
-		-- end
-		-- return vec
-		return {"-t", "bla"}
+		local s = vim.fn.input('Arguments: ')
+		local vec = {}
+		local index = 1
+		for part in string.gmatch(s, "%S+") do
+			vec[index] = part
+			index = index + 1
+		end
+		return vec
 	end,
     cwd = '${workspaceFolder}',
     stopAtEntry = true,
