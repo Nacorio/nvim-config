@@ -109,12 +109,25 @@ vim.pack.add({
 	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
 	{ src = "https://github.com/nvim-neotest/nvim-nio.git" },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui.git" },
+	{ src = "https://github.com/folke/which-key.nvim.git" },
+	{ src = "https://github.com/Freedzone/kerbovim.git" },
+	{ src = "https://github.com/everviolet/nvim.git" },
+	{ src = "https://github.com/sainnhe/sonokai.git" },
 })
 
--- require("tokyonight").setup({})
+require("tokyonight").setup({})
 -- vim.cmd [[colorscheme tokyonight-night]]
 require("gruvbox").setup({})
-vim.cmd [[colorscheme gruvbox]]
+-- vim.cmd [[colorscheme gruvbox]]
+require("evergarden").setup({
+    theme = {
+        variant = 'winter',
+        accent = 'pink',
+    },
+})
+-- vim.cmd [[colorscheme evergarden]]
+vim.g.sonokai_style = 'maia'
+vim.cmd [[colorscheme sonokai]]
 
 require("blink.cmp").setup({
 	keymap = { preset = 'super-tab' },
@@ -122,7 +135,7 @@ require("blink.cmp").setup({
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm" },
+	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm", "gleam" },
 	highlight = {
 		enable = true,
 	},
@@ -201,7 +214,7 @@ require("ibl").setup({
 
 require("nvim-autopairs").setup()
 
-require("Arduino-Nvim.lsp").setup()
+-- require("Arduino-Nvim.lsp").setup()
 
 require("guess-indent").setup {
 	override_editorconfig = false
@@ -273,3 +286,17 @@ dap.configurations.c = {
     end,
   },
 }
+dap.configurations.rust = dap.configurations.c
+
+require("which-key").setup()
+
+vim.lsp.enable('gleam')
+
+vim.lsp.config("kos-ls", {
+	cmd = {
+		"kos-ls"
+	}
+})
+-- vim.lsp.enable("kos-ls")
+
+-- require("Freedzone/kerbovim").setup()
