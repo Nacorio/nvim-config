@@ -116,6 +116,7 @@ vim.pack.add({
 	{ src = "https://github.com/windwp/nvim-ts-autotag.git" },
 	{ src = "https://github.com/rose-pine/neovim.git" },
 	{ src = "https://github.com/nvim-lualine/lualine.nvim.git" },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 })
 
 require("tokyonight").setup({})
@@ -196,7 +197,12 @@ require("mini.icons").setup({})
 -- require("mini.statusline").setup({})
 require("mini.comment").setup({})
 
-require("lualine").setup({})
+require("lualine").setup({
+	options = {
+		component_separators = {left = "│", right = "│"},
+		section_separators = {left = "", right = ""},
+	}
+})
 
 -- show diagnostics at the bottom
 require("trouble").setup({})
