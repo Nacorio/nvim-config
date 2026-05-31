@@ -62,7 +62,8 @@ map('i', '<C-j>', '<Down>')
 map('i', '<C-k>', '<Up>')
 map('i', '<C-l>', '<Right>')
 
-map('i', '<C-BS>', '<Esc>ldbi')
+map('i', '<C-BS>', '#<Esc>dbxa')
+-- map('i', '<C-BS>', '<Esc>dbxi')
 map('i', '<C-Del>', '<Esc>ldwi')
 
 -- cargo keybinds
@@ -104,7 +105,6 @@ vim.pack.add({
 	{ src = "https://github.com/lukas-reineke/indent-blankline.nvim.git" },
 	{ src = "https://github.com/windwp/nvim-autopairs.git" },
 	{ src = "https://github.com/NMAC427/guess-indent.nvim.git" },
-	{ src = "https://github.com/seblyng/roslyn.nvim.git" },
 	{ src = "https://github.com/folke/todo-comments.nvim.git" },
 	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
 	{ src = "https://github.com/nvim-neotest/nvim-nio.git" },
@@ -113,21 +113,31 @@ vim.pack.add({
 	{ src = "https://github.com/Freedzone/kerbovim.git" },
 	{ src = "https://github.com/everviolet/nvim.git" },
 	{ src = "https://github.com/sainnhe/sonokai.git" },
+	{ src = "https://github.com/windwp/nvim-ts-autotag.git" },
+	{ src = "https://github.com/rose-pine/neovim.git" },
 })
 
 require("tokyonight").setup({})
--- vim.cmd [[colorscheme tokyonight-night]]
+vim.cmd [[colorscheme tokyonight-night]]
 require("gruvbox").setup({})
 -- vim.cmd [[colorscheme gruvbox]]
 require("evergarden").setup({
-    theme = {
-        variant = 'winter',
-        accent = 'pink',
-    },
+	theme = {
+		variant = 'winter',
+		accent = 'pink',
+	},
 })
 -- vim.cmd [[colorscheme evergarden]]
-vim.g.sonokai_style = 'maia'
-vim.cmd [[colorscheme sonokai]]
+-- vim.g.sonokai_style = 'maia'
+-- vim.cmd [[colorscheme sonokai]]
+-- require("rose-pine").setup({})
+-- vim.cmd [[colorscheme rose-pine-moon]]
+
+
+--diagnostic color
+vim.cmd [[hi DiagnosticVirtualTextError guifg=#fc5d7c]]
+vim.cmd [[hi DiagnosticVirtualTextWarn guifg=#e7c664]]
+vim.cmd [[hi DiagnosticVirtualTextHint guifg=#baa0f8]]
 
 require("blink.cmp").setup({
 	keymap = { preset = 'super-tab' },
@@ -135,7 +145,7 @@ require("blink.cmp").setup({
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm", "gleam" },
+	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm", "gleam", "css", "glsl", "llvm" },
 	highlight = {
 		enable = true,
 	},
@@ -222,7 +232,7 @@ require("guess-indent").setup {
 
 require("todo-comments").setup({
 	keywords = {
-		TODO = { icon = "🛈", color = "info"},
+		TODO = { icon = "🛈", color = "info" },
 	},
 	highlight = {
 		pattern = [[.*(KEYWORDS)\s*]]
@@ -248,43 +258,43 @@ require("dapui").setup()
 
 local dap = require('dap')
 dap.adapters.cppdbg = {
-  id = 'cppdbg',
-  type = 'executable',
-  command = '/usr/share/cpptools-debug/bin/OpenDebugAD7',
+	id = 'cppdbg',
+	type = 'executable',
+	command = '/usr/share/cpptools-debug/bin/OpenDebugAD7',
 }
 dap.configurations.c = {
-  {
-    name = "Launch file",
-    type = "cppdbg",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-	args = function ()
-		local s = vim.fn.input('Arguments: ')
-		local vec = {}
-		local index = 1
-		for part in string.gmatch(s, "%S+") do
-			vec[index] = part
-			index = index + 1
-		end
-		return vec
-	end,
-    cwd = '${workspaceFolder}',
-    stopAtEntry = true,
-  },
-  {
-    name = 'Attach to gdbserver :1234',
-    type = 'cppdbg',
-    request = 'launch',
-    MIMode = 'gdb',
-    miDebuggerServerAddress = 'localhost:1234',
-    miDebuggerPath = '/usr/bin/gdb',
-    cwd = '${workspaceFolder}',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-  },
+	{
+		name = "Launch file",
+		type = "cppdbg",
+		request = "launch",
+		program = function()
+			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+		end,
+		args = function()
+			local s = vim.fn.input('Arguments: ')
+			local vec = {}
+			local index = 1
+			for part in string.gmatch(s, "%S+") do
+				vec[index] = part
+				index = index + 1
+			end
+			return vec
+		end,
+		cwd = '${workspaceFolder}',
+		stopAtEntry = true,
+	},
+	{
+		name = 'Attach to gdbserver :1234',
+		type = 'cppdbg',
+		request = 'launch',
+		MIMode = 'gdb',
+		miDebuggerServerAddress = 'localhost:1234',
+		miDebuggerPath = '/usr/bin/gdb',
+		cwd = '${workspaceFolder}',
+		program = function()
+			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+		end,
+	},
 }
 dap.configurations.rust = dap.configurations.c
 
@@ -300,3 +310,30 @@ vim.lsp.config("kos-ls", {
 -- vim.lsp.enable("kos-ls")
 
 -- require("Freedzone/kerbovim").setup()
+
+require("nvim-ts-autotag").setup()
+
+vim.lsp.config.bashls = {
+	cmd = { 'bash-language-server', 'start' },
+	filetypes = { 'bash', 'sh' }
+}
+vim.lsp.enable 'bashls'
+
+vim.lsp.config("llvm", {
+	cmd = {
+		"/home/kimi_l/bin/LLVM_LanguageServer"
+	}
+})
+vim.lsp.enable("llvm")
+
+-- local lsp = vim.api.nvim_create_augroup("LSP", { clear = true })
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	group = lsp,
+-- 	pattern = "lifelines",
+-- 	callback = function()
+-- 		vim.lsp.start({
+-- 			name = "LLVM LSP",
+-- 			cmd = { '/home/kimi_l/bin/LLVM_LanguageServer' },
+-- 		})
+-- 	end
+-- })
