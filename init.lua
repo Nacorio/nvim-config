@@ -1,4 +1,3 @@
-local vim = vim
 --------------------- OPTIONS -------------------------
 local o = vim.opt
 
@@ -23,13 +22,15 @@ o.listchars = { tab = '» ', trail = '·' }
 
 o.termguicolors = true
 
+o.autochdir = true
+
+--------------------- KEYBINDS -------------------------
 vim.g.mapleader = ' '
 vim.g.localmapleader = ' '
 
---------------------- KEYBINDS -------------------------
 local map = vim.keymap.set
 
-map('n', '<C-c>', ':!')
+-- map('n', '<C-c>', ':!')
 
 map('n', '<leader>y', '"+y')
 map('v', '<leader>y', '"+y')
@@ -39,9 +40,31 @@ map('n', '<C-S-K>', ':m -2<CR>')
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+map('i', '<C-h>', '<Left>')
+map('i', '<C-j>', '<Down>')
+map('i', '<C-k>', '<Up>')
+map('i', '<C-l>', '<Right>')
+
+map('n', '<leader>s', '<cmd>terminal<CR>')
+
+map('n', '<leader>e', '<cmd>e .<CR>') -- file explorer
+
+map('n', '<C-p>', '<cmd>bp<CR>')
+map('n', '<C-n>', '<cmd>bn<CR>')
+
+map('n', '<leader>bp', '<cmd>bp<CR>')
+map('n', '<leader>bn', '<cmd>bn<CR>')
+map('n', '<leader>bd', '<cmd>bd<CR>')
+
 -- lsp keybinds
 map('n', '<leader>lf', vim.lsp.buf.format)
+map('n', '<leader>lr', function()
+    for i, _ in pairs(vim.lsp.client) do
+        vim.lsp.stop_client(i)
+    end
+end)
 map('n', '<leader>d', vim.diagnostic.open_float)
+map('n', '<leader>a', '<cmd>Lspsaga code_action<CR>')
 
 -- dapui
 map('n', '<leader>tt', ':lua require(\'dapui\').toggle()<CR>')
@@ -60,6 +83,14 @@ vim.pack.add({
     { src = 'https://github.com/saghen/blink.lib' },
     { src = 'https://github.com/saghen/blink.cmp.git' },
     { src = "https://github.com/lewis6991/gitsigns.nvim.git" },
+    { src = 'https://github.com/mfussenegger/nvim-dap.git' },
+    { src = 'https://github.com/nvim-neotest/nvim-nio.git' },
+    { src = 'https://github.com/rcarriga/nvim-dap-ui.git' },
+    { src = 'https://github.com/folke/lazydev.nvim.git' },
+    { src = 'https://github.com/nvim-lualine/lualine.nvim.git' },
+    { src = 'https://github.com/akinsho/bufferline.nvim.git' },
+    { src = 'https://github.com/nvim-mini/mini.nvim.git' },
+    { src = 'https://github.com/nvimdev/lspsaga.nvim.git' },
 })
 
 require('tokyonight').setup({})
@@ -67,7 +98,7 @@ vim.cmd [[colorscheme tokyonight-night]]
 
 require('which-key').setup({})
 
-require('nvim-treesitter').install({'rust', 'c', 'lua'})
+require('nvim-treesitter').install({ 'rust', 'c', 'lua' })
 
 require('nvim-autopairs').setup({})
 
@@ -77,9 +108,36 @@ require('blink.cmp').setup({
 
 require('gitsigns').setup({})
 
+require('lazydev').setup({
+    library = { "nvim-dap-ui" },
+})
+
+require('dapui').setup()
+
+require("lualine").setup({
+    options = {
+        component_separators = { left = "│", right = "│" },
+        section_separators = { left = "", right = "" },
+    }
+})
+
+require("bufferline").setup()
+
+require('lspsaga').setup({
+    code_action = {
+        keys = {
+            quit = { 'q', '<Esc>' }
+        }
+    }
+})
+
+--------------------- mini.nvim -------------------------
+require('mini.surround').setup()
+
 --------------------- LSP -------------------------
 vim.lsp.inlay_hint.enable(true)
 vim.diagnostic.config { virtual_text = true }
 
 vim.lsp.enable("lua_ls")
-vim.lsp.enable("clang")
+vim.lsp.enable("clangd")
+vim.lsp.enable('rust_analyzer')
