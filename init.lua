@@ -50,6 +50,7 @@ map('n', '<leader>bn', '<cmd>BufferLineCycleNext<CR>')
 map('n', '<C-N>', '<cmd>BufferLineCycleNext<CR>')
 map('n', '<leader>bq', '<cmd>BufferLineCloseRight<CR>')
 map('n', '<leader>bo', '<cmd>BufferLineCloseOthers<CR>')
+map('n', '<leader>ya', ':%y+<CR>')
 
 -- Disable arrow keys in normal mode
 -- map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -82,41 +83,44 @@ map('n', '<leader>lf', vim.lsp.buf.format)
 map('n', '<leader>d', vim.diagnostic.open_float)
 
 --debug
-map('n', '<leader>t', ":lua require(\"dapui\").toggle()<CR>")
+map('n', '<leader>tt', ":lua require(\"dapui\").toggle()<CR>")
+map('n', '<leader>tb', '<cmd>DapToggleBreakpoint<CR>')
+map('n', '<leader>tc', '<cmd>DapClearBreakpoints<CR>')
 
 -- plugins
 vim.pack.add({
-	{ src = "https://github.com/folke/tokyonight.nvim.git" },
-	{ src = "https://github.com/ellisonleao/gruvbox.nvim.git" },
-	{ src = "https://github.com/echasnovski/mini.nvim.git" },
-	{ src = "https://github.com/Saghen/blink.cmp.git" },
-	{ src = "https://github.com/neovim/nvim-lspconfig.git" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter.git",    branch = 'master' },
-	{ src = "https://github.com/lewis6991/gitsigns.nvim.git" },
-	{ src = "https://github.com/norcalli/nvim-colorizer.lua.git" },
-	{ src = "https://github.com/mrcjkb/rustaceanvim.git" },
-	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
-	{ src = "https://github.com/folke/trouble.nvim.git" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim.git" },
-	{ src = "https://github.com/akinsho/bufferline.nvim.git" },
-	{ src = "https://github.com/nvim-telescope/telescope.nvim.git" },
-	{ src = "https://github.com/nvim-lua/plenary.nvim.git" },
-	{ src = "https://github.com/ray-x/web-tools.nvim.git" },
-	{ src = "https://github.com/lukas-reineke/indent-blankline.nvim.git" },
-	{ src = "https://github.com/windwp/nvim-autopairs.git" },
-	{ src = "https://github.com/NMAC427/guess-indent.nvim.git" },
-	{ src = "https://github.com/folke/todo-comments.nvim.git" },
-	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
-	{ src = "https://github.com/nvim-neotest/nvim-nio.git" },
-	{ src = "https://github.com/rcarriga/nvim-dap-ui.git" },
-	{ src = "https://github.com/folke/which-key.nvim.git" },
-	{ src = "https://github.com/Freedzone/kerbovim.git" },
-	{ src = "https://github.com/everviolet/nvim.git" },
-	{ src = "https://github.com/sainnhe/sonokai.git" },
-	{ src = "https://github.com/windwp/nvim-ts-autotag.git" },
-	{ src = "https://github.com/rose-pine/neovim.git" },
-	{ src = "https://github.com/nvim-lualine/lualine.nvim.git" },
-	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
+    { src = "https://github.com/folke/tokyonight.nvim.git" },
+    { src = "https://github.com/ellisonleao/gruvbox.nvim.git" },
+    { src = "https://github.com/echasnovski/mini.nvim.git" },
+    { src = "https://github.com/saghen/blink.cmp.git",                   version = 'v1' },
+    { src = "https://github.com/neovim/nvim-lspconfig.git" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter.git",    version = 'main', lazy = false },
+    { src = "https://github.com/lewis6991/gitsigns.nvim.git" },
+    { src = "https://github.com/norcalli/nvim-colorizer.lua.git" },
+    { src = "https://github.com/mrcjkb/rustaceanvim.git" },
+    { src = "https://github.com/mfussenegger/nvim-dap.git" },
+    { src = "https://github.com/folke/trouble.nvim.git" },
+    { src = "https://github.com/chomosuke/typst-preview.nvim.git" },
+    { src = "https://github.com/akinsho/bufferline.nvim.git" },
+    { src = "https://github.com/nvim-telescope/telescope.nvim.git" },
+    { src = "https://github.com/nvim-lua/plenary.nvim.git" },
+    { src = "https://github.com/ray-x/web-tools.nvim.git" },
+    { src = "https://github.com/lukas-reineke/indent-blankline.nvim.git" },
+    { src = "https://github.com/windwp/nvim-autopairs.git" },
+    { src = "https://github.com/NMAC427/guess-indent.nvim.git" },
+    { src = "https://github.com/folke/todo-comments.nvim.git" },
+    { src = "https://github.com/mfussenegger/nvim-dap.git" },
+    { src = "https://github.com/nvim-neotest/nvim-nio.git" },
+    { src = "https://github.com/rcarriga/nvim-dap-ui.git" },
+    { src = "https://github.com/folke/which-key.nvim.git" },
+    { src = "https://github.com/Freedzone/kerbovim.git" },
+    { src = "https://github.com/everviolet/nvim.git" },
+    { src = "https://github.com/sainnhe/sonokai.git" },
+    { src = "https://github.com/windwp/nvim-ts-autotag.git" },
+    { src = "https://github.com/rose-pine/neovim.git" },
+    { src = "https://github.com/nvim-lualine/lualine.nvim.git" },
+    { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+    -- { src = "https://github.com/Isrothy/neominimap.nvim.git" },
 })
 
 require("tokyonight").setup({})
@@ -124,10 +128,10 @@ vim.cmd [[colorscheme tokyonight-night]]
 require("gruvbox").setup({})
 -- vim.cmd [[colorscheme gruvbox]]
 require("evergarden").setup({
-	theme = {
-		variant = 'winter',
-		accent = 'pink',
-	},
+    theme = {
+        variant = 'winter',
+        accent = 'pink',
+    },
 })
 -- vim.cmd [[colorscheme evergarden]]
 -- vim.g.sonokai_style = 'maia'
@@ -142,27 +146,23 @@ vim.cmd [[hi DiagnosticVirtualTextWarn guifg=#e7c664]]
 vim.cmd [[hi DiagnosticVirtualTextHint guifg=#baa0f8]]
 
 require("blink.cmp").setup({
-	keymap = { preset = 'super-tab' },
-	fuzzy = { implementation = "lua" },
+    keymap = { preset = 'super-tab' },
+    fuzzy = { implementation = "lua" },
 })
 
-require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm", "gleam", "css", "glsl", "llvm" },
-	highlight = {
-		enable = true,
-	},
-}
+require('nvim-treesitter').install({ "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm", "gleam", "css",
+    "glsl", "llvm", "javascript", "typescript", "qmljs", "c3" })
 
 require('gitsigns').setup({})
 
 require('colorizer').setup({
-	'lua',
-	'css',
-	'rust',
-	'conf',
-	'typst',
-	'html',
-	'wgsl',
+    'lua',
+    'css',
+    'rust',
+    'conf',
+    'typst',
+    'html',
+    'wgsl',
 })
 
 -- mini modules
@@ -187,9 +187,9 @@ require("mini.surround").setup({})
 -- general workflow
 map('n', '<leader>fp', ':lua MiniFiles.open()<CR>')
 require("mini.files").setup({
-	mappings = {
-		close = '<Esc>',
-	},
+    mappings = {
+        close = '<Esc>',
+    },
 })
 
 -- appearance
@@ -198,10 +198,10 @@ require("mini.icons").setup({})
 require("mini.comment").setup({})
 
 require("lualine").setup({
-	options = {
-		component_separators = {left = "│", right = "│"},
-		section_separators = {left = "", right = ""},
-	}
+    options = {
+        component_separators = { left = "│", right = "│" },
+        section_separators = { left = "", right = "" },
+    }
 })
 
 -- show diagnostics at the bottom
@@ -222,7 +222,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 require("ibl").setup({
-	scope = { highlight = "MiniTablineHidden" },
+    scope = { highlight = "MiniTablineHidden" },
 })
 
 -- vim.lsp.config("wgsl-analyzer", {
@@ -236,28 +236,31 @@ require("nvim-autopairs").setup()
 -- require("Arduino-Nvim.lsp").setup()
 
 require("guess-indent").setup {
-	override_editorconfig = false
+    override_editorconfig = false
 }
 
 require("todo-comments").setup({
-	keywords = {
-		TODO = { icon = "🛈", color = "info" },
-	},
-	highlight = {
-		pattern = [[.*(KEYWORDS)\s*]]
-	},
-	search = {
-		pattern = [[\b(KEYWORDS)\b]]
-	}
+    keywords = {
+        TODO = { icon = "🛈", color = "info" },
+    },
+    highlight = {
+        pattern = [[.*(KEYWORDS)\s*]]
+    },
+    search = {
+        pattern = [[\b(KEYWORDS)\b]]
+    }
 })
 
 -- vim.lsp.config("roslyn", {})
 -- vim.lsp.enable("roslyn")
 
 vim.lsp.config("clangd", {
-	cmd = {
-		"clangd", "--clang-tidy"
-	}
+    cmd = {
+        "clangd", "--clang-tidy"
+    },
+    -- filetypes = {
+    --     "c", "cpp"
+    -- }
 })
 vim.lsp.enable("clangd")
 
@@ -267,43 +270,43 @@ require("dapui").setup()
 
 local dap = require('dap')
 dap.adapters.cppdbg = {
-	id = 'cppdbg',
-	type = 'executable',
-	command = '/usr/share/cpptools-debug/bin/OpenDebugAD7',
+    id = 'cppdbg',
+    type = 'executable',
+    command = '/usr/share/cpptools-debug/bin/OpenDebugAD7',
 }
 dap.configurations.c = {
-	{
-		name = "Launch file",
-		type = "cppdbg",
-		request = "launch",
-		program = function()
-			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-		end,
-		args = function()
-			local s = vim.fn.input('Arguments: ')
-			local vec = {}
-			local index = 1
-			for part in string.gmatch(s, "%S+") do
-				vec[index] = part
-				index = index + 1
-			end
-			return vec
-		end,
-		cwd = '${workspaceFolder}',
-		stopAtEntry = true,
-	},
-	{
-		name = 'Attach to gdbserver :1234',
-		type = 'cppdbg',
-		request = 'launch',
-		MIMode = 'gdb',
-		miDebuggerServerAddress = 'localhost:1234',
-		miDebuggerPath = '/usr/bin/gdb',
-		cwd = '${workspaceFolder}',
-		program = function()
-			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-		end,
-	},
+    {
+        name = "Launch file",
+        type = "cppdbg",
+        request = "launch",
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        args = function()
+            local s = vim.fn.input('Arguments: ')
+            local vec = {}
+            local index = 1
+            for part in string.gmatch(s, "%S+") do
+                vec[index] = part
+                index = index + 1
+            end
+            return vec
+        end,
+        cwd = '${workspaceFolder}',
+        stopAtEntry = true,
+    },
+    {
+        name = 'Attach to gdbserver :1234',
+        type = 'cppdbg',
+        request = 'launch',
+        MIMode = 'gdb',
+        miDebuggerServerAddress = 'localhost:1234',
+        miDebuggerPath = '/usr/bin/gdb',
+        cwd = '${workspaceFolder}',
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+    },
 }
 dap.configurations.rust = dap.configurations.c
 
@@ -312,9 +315,9 @@ require("which-key").setup()
 vim.lsp.enable('gleam')
 
 vim.lsp.config("kos-ls", {
-	cmd = {
-		"kos-ls"
-	}
+    cmd = {
+        "kos-ls"
+    }
 })
 -- vim.lsp.enable("kos-ls")
 
@@ -323,17 +326,17 @@ vim.lsp.config("kos-ls", {
 require("nvim-ts-autotag").setup()
 
 vim.lsp.config.bashls = {
-	cmd = { 'bash-language-server', 'start' },
-	filetypes = { 'bash', 'sh' }
+    cmd = { 'bash-language-server', 'start' },
+    filetypes = { 'bash', 'sh' }
 }
 vim.lsp.enable 'bashls'
 
-vim.lsp.config("llvm", {
-	cmd = {
-		"/home/kimi_l/bin/LLVM_LanguageServer"
-	}
-})
-vim.lsp.enable("llvm")
+-- vim.lsp.config("llvm", {
+-- 	cmd = {
+-- 		"/home/kimi_l/bin/LLVM_LanguageServer"
+-- 	}
+-- })
+-- vim.lsp.enable("llvm")
 
 -- local lsp = vim.api.nvim_create_augroup("LSP", { clear = true })
 -- vim.api.nvim_create_autocmd("FileType", {
@@ -346,3 +349,39 @@ vim.lsp.enable("llvm")
 -- 		})
 -- 	end
 -- })
+
+vim.lsp.config("typescript-language-server", {
+    cmd = {
+        "typescript-language-server",
+        "--stdio"
+    },
+    filetypes = {
+        "js", "ts"
+    }
+})
+vim.lsp.enable("typescript-language-server")
+
+vim.lsp.config("tinymist", {
+    cmd = {
+        "tinymist"
+    }
+})
+vim.lsp.enable("tinymist")
+
+-- vim.g.neominimap = {
+--     auto_enable = true,
+-- }
+
+vim.lsp.config("qmlls", {
+    cmd = { "qmlls6" },
+    filetypes = { "qml" }
+})
+vim.lsp.enable("qmlls")
+
+vim.lsp.config("c3-lsp", {
+    cmd = { "/home/kimi_l/c3-lsp/lsp/build/lsp" },
+    -- cmd = { "/home/kimi_l/c3-lsp/c3-lsp/server/bin/c3lsp" },
+    root_markers = { "project.json" },
+    filetypes = { "c3" }
+})
+vim.lsp.enable("c3-lsp")
