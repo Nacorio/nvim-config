@@ -28,6 +28,10 @@
       "rev": "8a7cf7e",
       "src": "https://github.com/echasnovski/mini.nvim.git"
     },
+    "neominimap.nvim": {
+      "rev": "0676085",
+      "src": "https://github.com/Isrothy/neominimap.nvim.git"
+    },
     "nvim-autopairs": {
       "rev": "7a2c97c",
       "src": "https://github.com/windwp/nvim-autopairs.git"
@@ -40,9 +44,21 @@
       "rev": "6782b09",
       "src": "https://github.com/mfussenegger/nvim-dap.git"
     },
+    "nvim-dap-ui": {
+      "rev": "cf91d5e",
+      "src": "https://github.com/rcarriga/nvim-dap-ui.git"
+    },
+    "nvim-lint": {
+      "rev": "606b823",
+      "src": "https://github.com/mfussenegger/nvim-lint.git"
+    },
     "nvim-lspconfig": {
       "rev": "ac98db2",
       "src": "https://github.com/neovim/nvim-lspconfig.git"
+    },
+    "nvim-nio": {
+      "rev": "21f5324",
+      "src": "https://github.com/nvim-neotest/nvim-nio.git"
     },
     "nvim-treesitter": {
       "rev": "42fc28ba",
@@ -63,6 +79,10 @@
     "telescope.nvim": {
       "rev": "b4da76b",
       "src": "https://github.com/nvim-telescope/telescope.nvim.git"
+    },
+    "todo-comments.nvim": {
+      "rev": "31e3c38",
+      "src": "https://github.com/folke/todo-comments.nvim.git"
     },
     "tokyonight.nvim": {
       "rev": "d14614c",

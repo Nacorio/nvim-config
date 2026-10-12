@@ -50,6 +50,7 @@ map('n', '<leader>bn', '<cmd>BufferLineCycleNext<CR>')
 map('n', '<C-N>', '<cmd>BufferLineCycleNext<CR>')
 map('n', '<leader>bq', '<cmd>BufferLineCloseRight<CR>')
 map('n', '<leader>bo', '<cmd>BufferLineCloseOthers<CR>')
+map('n', '<leader>ya', ':%y+<CR>')
 
 -- Disable arrow keys in normal mode
 -- map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -65,13 +66,6 @@ map('i', '<C-l>', '<Right>')
 map('i', '<C-BS>', '<Esc>ldbi')
 map('i', '<C-Del>', '<Esc>ldwi')
 
--- cargo keybinds
-map('n', '<leader>cr', ':w<CR>:!cargo run<CR>')
-map('n', '<leader>cb', ':w<CR>:!cargo build<CR>')
-map('n', '<leader>ct', ':w<CR>:!cargo test<CR>')
-map('n', '<leader>cf', ':w<CR>:!cargo run --release<CR>')
-map('n', '<leader>cg', ':w<CR>:!cargo build --release<CR>')
-map('n', '<leader>ca', ':!cargo add')
 
 -- typst keybinds
 -- map('n', '<leader>t', ':TypstPreview<CR>')
@@ -109,12 +103,14 @@ vim.pack.add({
 	{ src = "https://github.com/mfussenegger/nvim-dap.git" },
 	{ src = "https://github.com/nvim-neotest/nvim-nio.git" },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui.git" },
+	{ src = "https://github.com/mfussenegger/nvim-lint.git" },
+	{ src = "https://github.com/Isrothy/neominimap.nvim.git" },
 })
 
--- require("tokyonight").setup({})
--- vim.cmd [[colorscheme tokyonight-night]]
-require("gruvbox").setup({})
-vim.cmd [[colorscheme gruvbox]]
+require("tokyonight").setup({})
+vim.cmd [[colorscheme tokyonight-night]]
+-- require("gruvbox").setup({})
+-- vim.cmd [[colorscheme gruvbox]]
 
 require("blink.cmp").setup({
 	keymap = { preset = 'super-tab' },
@@ -122,10 +118,11 @@ require("blink.cmp").setup({
 })
 
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm" },
+	ensure_installed = { "c", "lua", "rust", "typst", "html", "wgsl", "cpp", "c_sharp", "asm", "python", "javascript", "css", "bash" },
 	highlight = {
 		enable = true,
 	},
+	indent = { enable = true },
 }
 
 require('gitsigns').setup({})
@@ -209,7 +206,7 @@ require("guess-indent").setup {
 
 require("todo-comments").setup({
 	keywords = {
-		TODO = { icon = "🛈", color = "info"},
+		TODO = { icon = "🛈", color = "info" },
 	},
 	highlight = {
 		pattern = [[.*(KEYWORDS)\s*]]
@@ -231,45 +228,70 @@ vim.lsp.enable("clangd")
 
 vim.lsp.enable('asm_lsp')
 
+-- vim.lsp.config("python-lsp-server", {
+-- })
+-- vim.lsp.enable("python-lsp-server")
+vim.lsp.enable("pylsp")
+
 require("dapui").setup()
 
 local dap = require('dap')
 dap.adapters.cppdbg = {
-  id = 'cppdbg',
-  type = 'executable',
-  command = '/usr/share/cpptools-debug/bin/OpenDebugAD7',
+	id = 'cppdbg',
+	type = 'executable',
+	command = '/usr/share/cpptools-debug/bin/OpenDebugAD7',
 }
 dap.configurations.c = {
-  {
-    name = "Launch file",
-    type = "cppdbg",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-	args = function ()
-		local s = vim.fn.input('Arguments: ')
-		local vec = {}
-		local index = 1
-		for part in string.gmatch(s, "%S+") do
-			vec[index] = part
-			index = index + 1
-		end
-		return vec
+	{
+		name = "Launch file",
+		type = "cppdbg",
+		request = "launch",
+		program = function()
+			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+		end,
+		args = function()
+			local s = vim.fn.input('Arguments: ')
+			local vec = {}
+			local index = 1
+			for part in string.gmatch(s, "%S+") do
+				vec[index] = part
+				index = index + 1
+			end
+			return vec
+		end,
+		cwd = '${workspaceFolder}',
+		stopAtEntry = true,
+	},
+	{
+		name = 'Attach to gdbserver :1234',
+		type = 'cppdbg',
+		request = 'launch',
+		MIMode = 'gdb',
+		miDebuggerServerAddress = 'localhost:1234',
+		miDebuggerPath = '/usr/bin/gdb',
+		cwd = '${workspaceFolder}',
+		program = function()
+			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+		end,
+	},
+}
+
+require('lint').linters_by_ft = {
+	python = { 'pylint' },
+}
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	callback = function()
+		-- try_lint without arguments runs the linters defined in `linters_by_ft`
+		-- for the current filetype
+		require("lint").try_lint()
+
+		-- You can call `try_lint` with a linter name or a list of names to always
+		-- run specific linters, independent of the `linters_by_ft` configuration
+		-- require("lint").try_lint("cspell")
 	end,
-    cwd = '${workspaceFolder}',
-    stopAtEntry = true,
-  },
-  {
-    name = 'Attach to gdbserver :1234',
-    type = 'cppdbg',
-    request = 'launch',
-    MIMode = 'gdb',
-    miDebuggerServerAddress = 'localhost:1234',
-    miDebuggerPath = '/usr/bin/gdb',
-    cwd = '${workspaceFolder}',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-  },
+})
+
+vim.g.neominimap = {
+    auto_enable = true,
 }
