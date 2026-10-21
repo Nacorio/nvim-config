@@ -39,33 +39,28 @@ map('n', '<leader>bf', telescope_builtin.buffers)
 map('n', '<leader>by', ':%y+<CR>')
 
 ------------ code actions ----------
-map('n', '<leader>cf', vim.lsp.buf.format, { desc = 'format'})
--- map('n', '<leader>cr', function()
---     for i, _ in pairs(vim.lsp.client) do
---         vim.lsp.stop_client(i)
---     end
--- end)
-map('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'open diagnostic float'})
-map('n', '<leader>a', '<cmd>Lspsaga code_action<CR>', {desc = 'code action'})
-map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', {desc = 'code action'})
-map('n', '<leader>cr', '<cmd>Lspsaga rename<CR>', {desc = 'rename'})
-map('n', '<leader>cd', 'gd', {desc = 'go to definition'})
+map('n', '<leader>cf', vim.lsp.buf.format, { desc = 'format' })
+map('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'open diagnostic float' })
+map('n', '<leader>a', '<cmd>Lspsaga code_action<CR>', { desc = 'code action' })
+map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', { desc = 'code action' })
+map('n', '<leader>cr', '<cmd>Lspsaga rename<CR>', { desc = 'rename' })
+map('n', '<leader>cd', 'gd', { desc = 'go to definition' })
 
 CompileCommand = ""
-map('n', '<leader>cc', function ()
+map('n', '<leader>cc', function()
     CompileCommand = vim.fn.input("compile command: ", CompileCommand)
     vim.cmd(':!' .. CompileCommand);
-end, {desc = 'compile'})
-map('n', '<leader>cC', function ()
+end, { desc = 'compile' })
+map('n', '<leader>cC', function()
     vim.cmd(':!' .. CompileCommand);
-end, {desc = 'compile with same command'})
+end, { desc = 'compile with same command' })
 
 ------------ dapui ----------
-map('n', '<leader>tt', ':lua require(\'dapui\').toggle()<CR>', { desc = 'toggle DAP ui'})
+map('n', '<leader>tt', ':lua require(\'dapui\').toggle()<CR>', { desc = 'toggle DAP ui' })
 map('n', '<leader>tb', '<cmd>DapToggleBreakpoint<CR>')
 map('n', '<leader>tc', '<cmd>DapClearBreakpoints<CR>')
 
 ------------ help ----------
 map('n', '<leader>hk', '<cmd>WhichKey<CR>')
-map('n', '<leader>hr', ':so ~/.config/nvim/init.lua<CR>', { desc = 'reload config'})
-map('n', '<leader>hs', ':so<CR>', { desc = 'source current file'})
+map('n', '<leader>hr', ':so ~/.config/nvim/init.lua<CR>', { desc = 'reload config' })
+map('n', '<leader>hs', ':so<CR>', { desc = 'source current file' })
