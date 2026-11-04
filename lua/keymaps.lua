@@ -40,7 +40,7 @@ map('n', '<leader>by', ':%y+<CR>')
 
 ------------ code actions ----------
 map('n', '<leader>cf', vim.lsp.buf.format, { desc = 'format' })
-map('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'open diagnostic float' })
+map('n', '<leader>d', vim.diagnostic.open_float, { desc = 'open diagnostic float' })
 map('n', '<leader>a', '<cmd>Lspsaga code_action<CR>', { desc = 'code action' })
 map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', { desc = 'code action' })
 map('n', '<leader>cr', '<cmd>Lspsaga rename<CR>', { desc = 'rename' })

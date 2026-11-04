@@ -12,6 +12,11 @@ vim.lsp.config("qmlls", {
 })
 vim.lsp.enable("qmlls")
 
+vim.lsp.enable("hls")
+
+vim.lsp.enable('kotlin_lsp')
+vim.lsp.enable('jdtls')
+
 --------------------- DAP -------------------------
 local dap = require('dap')
 dap.adapters.cppdbg = {

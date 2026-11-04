@@ -1,8 +1,8 @@
---------------------- PLUGIN INSTALLATION -------------------------
+-------------------- PLUGIN INSTALLATION -------------------------
 vim.pack.add({
     { src = 'https://github.com/folke/tokyonight.nvim.git' },
     { src = 'https://github.com/folke/which-key.nvim.git' },
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter.git', lazy = false },
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter.git',      lazy = false },
     { src = 'https://github.com/neovim/nvim-lspconfig.git' },
     { src = 'https://github.com/windwp/nvim-autopairs.git' },
     { src = 'https://github.com/saghen/blink.lib' },
@@ -20,6 +20,14 @@ vim.pack.add({
     { src = 'https://github.com/nvim-lua/plenary.nvim.git' },
     { src = 'https://github.com/nvim-telescope/telescope.nvim.git' },
     { src = 'https://github.com/ahmedkhalf/project.nvim.git' },
+    { src = 'https://github.com/MeanderingProgrammjr/render-markdown.nvim' },
+    -- java dependencies
+    {
+        src = 'https://github.com/JavaHello/spring-boot.nvim',
+        version = '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0',
+    },
+    { src = 'https://github.com/MunifTanjim/nui.nvim' },
+    { src = 'https://github.com/nvim-java/nvim-java.git' },
 })
 
 --------------------- PLUGIN SETTINGS -------------------------
@@ -28,7 +36,7 @@ vim.cmd [[colorscheme tokyonight-night]]
 
 require('which-key').setup({})
 
-require('nvim-treesitter').install({ 'rust', 'c', 'lua' })
+require('nvim-treesitter').install({ 'rust', 'c', 'lua', 'java', 'kotlin', 'python' })
 
 require('nvim-autopairs').setup({})
 
@@ -65,8 +73,11 @@ require('ibl').setup({
     scope = { highlight = "MiniTablineHidden" },
 })
 
+require('java').setup()
+
 --------------------- mini.nvim -------------------------
 require('mini.surround').setup()
+require('mini.icons').setup()
 
 -- telescope
 require('telescope').setup({})
@@ -74,3 +85,5 @@ require('telescope').setup({})
 -- project_nvim
 require('project_nvim').setup({})
 require('telescope').load_extension('projects')
+
+require('render-markdown').setup({})
