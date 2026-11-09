@@ -26,6 +26,7 @@ vim.lsp.enable("hls")
 
 vim.lsp.enable('kotlin_lsp')
 vim.lsp.enable('jdtls')
+vim.lsp.enable('pylsp')
 
 vim.lsp.enable('html')
 
