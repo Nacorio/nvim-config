@@ -5,7 +5,7 @@ vim.pack.add({
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter.git',      lazy = false },
     { src = 'https://github.com/neovim/nvim-lspconfig.git' },
     { src = 'https://github.com/windwp/nvim-autopairs.git' },
-    { src = 'https://github.com/saghen/blink.cmp.git', version = vim.version.range("1.*") },
+    { src = 'https://github.com/saghen/blink.cmp.git',                     version = vim.version.range("1.*") },
     { src = "https://github.com/lewis6991/gitsigns.nvim.git" },
     { src = 'https://github.com/mfussenegger/nvim-dap.git' },
     { src = 'https://github.com/nvim-neotest/nvim-nio.git' },
@@ -27,6 +27,8 @@ vim.pack.add({
     },
     { src = 'https://github.com/MunifTanjim/nui.nvim' },
     { src = 'https://github.com/nvim-java/nvim-java.git' },
+    { src = 'https://github.com/uga-rosa/ccc.nvim.git' },
+    { src = 'https://github.com/chomosuke/typst-preview.nvim.git' },
 })
 
 --------------------- PLUGIN SETTINGS -------------------------
@@ -73,6 +75,10 @@ require('ibl').setup({
 })
 
 require('java').setup()
+
+require("ccc").setup()
+
+require('typst-preview').setup()
 
 --------------------- mini.nvim -------------------------
 require('mini.surround').setup()

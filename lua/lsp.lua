@@ -4,6 +4,16 @@ vim.diagnostic.config { virtual_text = true }
 
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("clangd")
+
+vim.lsp.config('rust_analyzer', {
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        features = "all", -- Enable all features
+      },
+    },
+  }
+})
 vim.lsp.enable('rust_analyzer')
 
 vim.lsp.config("qmlls", {
@@ -16,6 +26,10 @@ vim.lsp.enable("hls")
 
 vim.lsp.enable('kotlin_lsp')
 vim.lsp.enable('jdtls')
+
+vim.lsp.enable('html')
+
+vim.lsp.enable('tinymist')
 
 --------------------- DAP -------------------------
 local dap = require('dap')

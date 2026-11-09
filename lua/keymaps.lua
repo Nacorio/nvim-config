@@ -38,6 +38,10 @@ map('n', '<leader>bd', '<cmd>bd<CR>')
 map('n', '<leader>bf', telescope_builtin.buffers)
 map('n', '<leader>by', ':%y+<CR>')
 
+------------ windows ----------
+map('n', '<leader>w', '<C-w>')
+map('n', '<leader>wd', '<C-w>q', {desc = "Quit a window"})
+
 ------------ code actions ----------
 map('n', '<leader>cf', vim.lsp.buf.format, { desc = 'format' })
 map('n', '<leader>d', vim.diagnostic.open_float, { desc = 'open diagnostic float' })
@@ -45,6 +49,7 @@ map('n', '<leader>a', '<cmd>Lspsaga code_action<CR>', { desc = 'code action' })
 map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', { desc = 'code action' })
 map('n', '<leader>cr', '<cmd>Lspsaga rename<CR>', { desc = 'rename' })
 map('n', '<leader>cd', 'gd', { desc = 'go to definition' })
+map('n', '<leader>cp', '<cmd>CccPick<CR>', { desc = 'pick color' })
 
 CompileCommand = ""
 map('n', '<leader>cc', function()
